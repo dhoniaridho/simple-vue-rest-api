@@ -13,6 +13,16 @@
 							{{ nav.name }}
 						</nav-link>
 					</li>
+					<li>
+						<nav-link href="/login">
+							Login
+						</nav-link>
+					</li>
+					<li>
+						<nav-link to="/register">
+							Regiseter
+						</nav-link>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -22,6 +32,7 @@
 <script>
 	import { Navigation } from '../../lib';
 	import NavLink from '../ui/NavLink.vue';
+
 	export default {
 		components: { NavLink },
 		name: 'Header',

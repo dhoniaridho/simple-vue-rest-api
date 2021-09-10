@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<Header />
-		<main class="min-h-screen px-20">
+		<main class="min-h-screen px-20 py-10">
 			<slot />
 		</main>
 		<Footer />

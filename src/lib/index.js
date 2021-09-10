@@ -4,14 +4,6 @@ const Navigation = [
 		href: '/',
 	},
 	{
-		name: 'Login',
-		href: '/login',
-	},
-	{
-		name: 'Register',
-		href: '/register',
-	},
-	{
 		name: 'Users',
 		href: '/users',
 	},
