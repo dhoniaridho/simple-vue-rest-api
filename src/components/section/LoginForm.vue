@@ -43,10 +43,13 @@
 	import Button from '../ui/Button.vue';
 	import axios from 'axios';
 	import Cookie from 'js-cookie';
+	import { useRouter } from 'vue-router';
+
 	export default {
 		components: { Button },
 		name: 'LoginForm',
 		setup() {
+			const router = useRouter();
 			const state = reactive({
 				isLoading: false,
 				form: {
@@ -70,6 +73,10 @@
 						username: '',
 						password: '',
 					};
+					router.push({
+						name: 'Home',
+						path: '/',
+					});
 					state.isLoading = false;
 				} catch (e) {
 					console.log(e);

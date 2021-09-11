@@ -20,8 +20,17 @@
 					</li>
 					<li>
 						<nav-link to="/register">
-							Regiseter
+							Register
 						</nav-link>
+					</li>
+					<li>
+						<a
+							class="block py-2 lg:py-6 lg:inline-block lg:mt-0 mr-5 hover:text-blue-500 border-b-2 border-transparent font-semibold"
+							href="javascript:void(0)"
+							@click="handleLogout"
+						>
+							Logout
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -32,13 +41,22 @@
 <script>
 	import { Navigation } from '../../lib';
 	import NavLink from '../ui/NavLink.vue';
+	import Cookies from 'js-cookie';
+	import { useRouter } from 'vue-router';
 
 	export default {
 		components: { NavLink },
 		name: 'Header',
 		setup() {
+			const router = useRouter();
 			const navs = Navigation;
+			const handleLogout = (e) => {
+				e.preventDefault();
+				Cookies.remove('token');
+				router.push({ path: '/login' });
+			};
 			return {
+				handleLogout,
 				navs,
 			};
 		},

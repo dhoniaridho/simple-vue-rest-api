@@ -6,7 +6,7 @@
 		</div>
 		<ul class="grid grid-cols-3 gap-5">
 			<li v-for="d in data.data" :key="d.id">
-				<router-link :to="d.first_name.toLowerCase()">
+				<router-link :to="`/users/${d.id}`">
 					<img class="w-full h-64 object-cover" :src="d.avatar" alt="" />
 					{{ d.first_name }}
 				</router-link>
@@ -33,10 +33,10 @@
 
 <script>
 	import { reactive, toRefs } from 'vue';
-	import MainLayout from '../components/layout/MainLayout.vue';
+	import MainLayout from '@/components/layout/MainLayout.vue';
 	import { onMounted } from 'vue';
 	import axios from 'axios';
-	import Button from '../components/ui/Button.vue';
+	import Button from '@/components/ui/Button.vue';
 	export default {
 		components: { MainLayout, Button },
 		name: 'Users',
@@ -82,5 +82,3 @@
 		},
 	};
 </script>
-
-<style></style>
