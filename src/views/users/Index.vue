@@ -11,7 +11,7 @@
 				</Link>
 			</div>
 		</div>
-		<ul class="grid grid-cols-3 gap-5">
+		<ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
 			<li v-for="d in data.data" :key="d.id">
 				<router-link :to="`/users/${d.id}`">
 					<img class="w-full h-64 object-cover" :src="d.avatar" alt="" />
