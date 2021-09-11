@@ -1,8 +1,15 @@
 <template>
 	<MainLayout>
-		<div class="my-10">
-			<h1 class="text-3xl font-semibold">list users</h1>
-			<h1>page: {{ page }}</h1>
+		<div class="my-10 flex justify-between">
+			<div>
+				<h1 class="text-3xl font-semibold">list users</h1>
+				<h1>page: {{ page }}</h1>
+			</div>
+			<div>
+				<Link type="primary" href="/users/create">
+					Create User
+				</Link>
+			</div>
 		</div>
 		<ul class="grid grid-cols-3 gap-5">
 			<li v-for="d in data.data" :key="d.id">
@@ -37,8 +44,10 @@
 	import { onMounted } from 'vue';
 	import axios from 'axios';
 	import Button from '@/components/ui/Button.vue';
+	import Link from '@/components/ui/Link.vue';
+
 	export default {
-		components: { MainLayout, Button },
+		components: { MainLayout, Button, Link },
 		name: 'Users',
 		setup() {
 			const state = reactive({

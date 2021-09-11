@@ -16,22 +16,29 @@
 	import axios from 'axios';
 	import { reactive, toRefs } from '@vue/reactivity';
 	import { onMounted } from '@vue/runtime-core';
-	import { useRoute } from 'vue-router';
+	import { useRoute, useRouter } from 'vue-router';
 	export default {
 		components: { MainLayout },
 		setup() {
 			const route = useRoute();
+			const router = useRouter();
 			const state = reactive({
 				user: {},
 				isLoading: true,
 			});
 
 			const fetchUser = async () => {
-				const res = await axios.get(
-					`https://reqres.in/api/users/${route.params.id}`
-				);
-				state.user = res.data.data;
-				state.isLoading = false;
+				try {
+					const res = await axios.get(
+						`https://reqres.in/api/users/${route.params.id}`
+					);
+					state.user = res.data.data;
+					state.isLoading = false;
+				} catch (e) {
+					if (e.response.status === 404) {
+						router.push({ path: '/404' });
+					}
+				}
 			};
 			onMounted(() => {
 				fetchUser();

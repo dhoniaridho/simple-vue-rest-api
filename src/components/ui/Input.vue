@@ -1,10 +1,6 @@
 <template>
-	<fieldset class="flex flex-col">
-		<label class="capitalize" :for="name">
-			{{ name }}
-		</label>
-		<input
-			class="
+	<input
+		class="
 				mt-2
 				bg-gray-50
 				py-2
@@ -14,11 +10,10 @@
 				ring-2 ring-offset-blue-200
 				rounded-md
 			"
-			type="text"
-			:name="name"
-			:id="name"
-		/>
-	</fieldset>
+		type="text"
+		:name="name"
+		:id="name"
+	/>
 </template>
 
 <script>

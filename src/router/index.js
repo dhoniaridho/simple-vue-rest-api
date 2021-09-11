@@ -1,10 +1,12 @@
 import Cookies from 'js-cookie';
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/Index.vue';
+import NotFound from '@/views/errors/404.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Users from '@/views/users/Index.vue';
 import UsersView from '@/views/users/View.vue';
+import UsersCreate from '@/views/users/Create.vue';
 
 const routes = [
 	{
@@ -29,8 +31,18 @@ const routes = [
 	},
 	{
 		path: '/users/:id',
-		name: 'Users.view',
+		name: 'UsersView',
 		component: UsersView,
+	},
+	{
+		path: '/users/create',
+		name: 'UsersCreate',
+		component: UsersCreate,
+	},
+	{
+		path: '/404',
+		name: 'NotFound',
+		component: NotFound,
 	},
 ];
 
