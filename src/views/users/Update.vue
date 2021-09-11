@@ -33,7 +33,7 @@
 	import MainLayout from '@/components/layout/MainLayout.vue';
 	import axios from 'axios';
 	import { onMounted, reactive, toRefs } from 'vue';
-	import { useRoute } from 'vue-router';
+	import { useRoute, useRouter } from 'vue-router';
 	export default {
 		components: {
 			Input,
@@ -41,6 +41,7 @@
 			MainLayout,
 		},
 		setup() {
+			const router = useRouter();
 			const route = useRoute();
 			const state = reactive({
 				message: '',
@@ -58,8 +59,11 @@
 						name: res.data.data.first_name,
 						email: res.data.data.email,
 					};
-				} catch (error) {
-					state.message = error.response;
+				} catch (e) {
+					state.message = e.response;
+					if (e.response.status === 404) {
+						router.push({ path: '/404' });
+					}
 				}
 			});
 			const UpdateUser = async (e) => {
