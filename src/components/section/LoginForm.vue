@@ -79,7 +79,6 @@
 					});
 					state.isLoading = false;
 				} catch (e) {
-					console.log(e);
 					state.error.message = e.response.data.error;
 					state.isLoading = false;
 					state.form = {

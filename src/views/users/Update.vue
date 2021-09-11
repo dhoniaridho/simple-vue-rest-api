@@ -1,7 +1,7 @@
 <template>
-	<div>
-		<h1 class="text-blue-700" v-if="message">{{ message.name }} was created</h1>
-		<form @submit="postUser">
+	<MainLayout>
+		<h1 class="text-blue-700" v-if="message">{{ message.name }} was edited</h1>
+		<form @submit="UpdateUser">
 			<fieldset class="flex flex-col">
 				<Label id="name">Name</Label>
 				<Input
@@ -12,49 +12,67 @@
 				/>
 			</fieldset>
 			<fieldset class="flex flex-col">
-				<label for="job">Job</label>
+				<label for="job">email</label>
 				<Input
-					:value="form.job"
+					:value="form.email"
 					required
-					@input="form.job = $event.target.value"
-					name="job"
+					@input="form.email = $event.target.value"
+					name="email"
 				/>
 			</fieldset>
 			<Button class="mt-5" variant="primary" type="submit">
 				Submit
 			</Button>
 		</form>
-	</div>
+	</MainLayout>
 </template>
 
 <script>
 	import Input from '@/components/ui/Input.vue';
 	import Button from '@/components/ui/Button.vue';
+	import MainLayout from '@/components/layout/MainLayout.vue';
 	import axios from 'axios';
-	import { reactive, toRefs } from '@vue/runtime-core';
+	import { onMounted, reactive, toRefs } from 'vue';
+	import { useRoute } from 'vue-router';
 	export default {
 		components: {
 			Input,
 			Button,
+			MainLayout,
 		},
 		setup() {
+			const route = useRoute();
 			const state = reactive({
 				message: '',
 				form: {
 					name: '',
-					job: '',
+					email: '',
 				},
 			});
-			const postUser = async (e) => {
+			onMounted(async () => {
+				try {
+					const res = await axios.get(
+						`https://reqres.in/api/users/${route.params.id}`
+					);
+					state.form = {
+						name: res.data.data.first_name,
+						email: res.data.data.email,
+					};
+				} catch (error) {
+					state.message = error.response;
+				}
+			});
+			const UpdateUser = async (e) => {
 				e.preventDefault();
 				try {
-					const res = await axios.post(
+					const res = await axios.put(
 						'https://reqres.in/api/users',
 						state.form
 					);
+					console.log(res.data);
 					state.form = {
 						name: '',
-						job: '',
+						email: '',
 					};
 					state.message = res.data;
 				} catch (e) {
@@ -62,7 +80,7 @@
 				}
 			};
 			return {
-				postUser,
+				UpdateUser,
 				...toRefs(state),
 			};
 		},

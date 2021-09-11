@@ -3,11 +3,26 @@
 		<div v-if="isLoading">
 			<h1>Loading</h1>
 		</div>
-		<div v-if="!isLoading">
+		<div :class="isLoading && 'cursor-wait'" v-if="!isLoading">
 			<img :src="user.avatar" alt="" />
 			<h1 class="text-3xl">{{ user.first_name + ' ' + user.last_name }}</h1>
 			<h3>{{ user.email }}</h3>
-			<Link :href="'/users/edit/' + user.id" type="primary"> Edit</Link>
+			<div class="flex">
+				<Link
+					class="inline mr-4"
+					:href="'/users/edit/' + user.id"
+					type="primary"
+				>
+					Edit</Link
+				>
+				<Button
+					@click="deleteUser"
+					:href="'/users/delete' + user.id"
+					variant="danger"
+				>
+					Delete</Button
+				>
+			</div>
 		</div>
 	</MainLayout>
 </template>
@@ -15,12 +30,13 @@
 <script>
 	import MainLayout from '@/components/layout/MainLayout.vue';
 	import Link from '@/components/ui/Link.vue';
+	import Button from '@/components/ui/Button.vue';
 	import axios from 'axios';
 	import { reactive, toRefs } from '@vue/reactivity';
 	import { onMounted } from '@vue/runtime-core';
 	import { useRoute, useRouter } from 'vue-router';
 	export default {
-		components: { MainLayout, Link },
+		components: { MainLayout, Link, Button },
 		setup() {
 			const route = useRoute();
 			const router = useRouter();
@@ -28,7 +44,19 @@
 				user: {},
 				isLoading: true,
 			});
-
+			const deleteUser = async () => {
+				try {
+					state.isLoading = false;
+					await axios.delete(`https://reqres.in/api/users/${route.params.id}`);
+					alert('user sucessfully deleted');
+					router.push({ path: '/users' });
+				} catch (e) {
+					state.isLoading = false;
+					if (e.response.status === 404) {
+						router.push({ path: '/404' });
+					}
+				}
+			};
 			const fetchUser = async () => {
 				try {
 					const res = await axios.get(
@@ -46,6 +74,7 @@
 				fetchUser();
 			});
 			return {
+				deleteUser,
 				...toRefs(state),
 			};
 		},

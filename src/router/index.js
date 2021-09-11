@@ -7,6 +7,7 @@ import Register from '@/views/Register.vue';
 import Users from '@/views/users/Index.vue';
 import UsersView from '@/views/users/View.vue';
 import UsersCreate from '@/views/users/Create.vue';
+import UsersUpdate from '@/views/users/Update.vue';
 
 const routes = [
 	{
@@ -38,6 +39,11 @@ const routes = [
 		path: '/users/create',
 		name: 'UsersCreate',
 		component: UsersCreate,
+	},
+	{
+		path: '/users/edit/:id',
+		name: 'UsersUpdate',
+		component: UsersUpdate,
 	},
 	{
 		path: '/404',
